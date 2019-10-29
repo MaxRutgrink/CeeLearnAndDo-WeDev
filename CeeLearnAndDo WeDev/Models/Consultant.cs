@@ -8,6 +8,7 @@ namespace CeeLearnAndDo_WeDev.Models
     public class Consultant
     {
         public int Id { get; set; }
+        public User User { get; set; }
         public int UserId { get; set; }
         public string ImageUrl { get; set; }
         public string Biography { get; set; }
