@@ -8,7 +8,9 @@ namespace CeeLearnAndDo_WeDev.Models
     public class Article
     {
         public int Id { get; set; }
+        public Consultant Consultant { get; set; }
         public int ConsultantId { get; set; }
+        public Category Category { get; set; }
         public int CategoryId { get; set; }
         public string Title { get; set; }
         public DateTime CreationDate { get; set; }
