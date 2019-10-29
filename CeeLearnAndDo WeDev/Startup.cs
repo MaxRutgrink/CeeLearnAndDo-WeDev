@@ -38,7 +38,7 @@ namespace CeeLearnAndDo_WeDev
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -46,7 +46,7 @@ namespace CeeLearnAndDo_WeDev
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<IdentityUser>userManager,RoleManager<IdentityRole>roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -65,6 +65,7 @@ namespace CeeLearnAndDo_WeDev
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+            Seed.SeedUser(userManager, roleManager);
 
             app.UseMvc(routes =>
             {

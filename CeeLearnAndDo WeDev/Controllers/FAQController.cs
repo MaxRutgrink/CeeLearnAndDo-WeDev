@@ -2,92 +2,152 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using CeeLearnAndDo_WeDev.Data;
+using CeeLearnAndDo_WeDev.Models;
 
 namespace CeeLearnAndDo_WeDev.Controllers
 {
     public class FAQController : Controller
     {
-        // GET: FAQ
-        public ActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public FAQController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        // GET: FAQ
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Question.ToListAsync());
         }
 
         // GET: FAQ/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var question = await _context.Question
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (question == null)
+            {
+                return NotFound();
+            }
+
+            return View(question);
         }
 
         // GET: FAQ/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
         // POST: FAQ/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([Bind("Id,UserId,CategoryId,Content,CreationDate,IsVisible,Title")] Question question)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                _context.Add(question);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(question);
         }
 
         // GET: FAQ/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var question = await _context.Question.FindAsync(id);
+            if (question == null)
+            {
+                return NotFound();
+            }
+            return View(question);
         }
 
         // POST: FAQ/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,CategoryId,Content,CreationDate,IsVisible,Title")] Question question)
         {
-            try
+            if (id != question.Id)
             {
-                // TODO: Add update logic here
+                return NotFound();
+            }
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(question);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!QuestionExists(question.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(question);
         }
 
         // GET: FAQ/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var question = await _context.Question
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (question == null)
+            {
+                return NotFound();
+            }
+
+            return View(question);
         }
 
         // POST: FAQ/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var question = await _context.Question.FindAsync(id);
+            _context.Question.Remove(question);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+        private bool QuestionExists(int id)
+        {
+            return _context.Question.Any(e => e.Id == id);
         }
     }
 }

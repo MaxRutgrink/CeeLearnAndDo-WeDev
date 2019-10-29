@@ -14,6 +14,6 @@ namespace CeeLearnAndDo_WeDev.Data
         {
         }
         public DbSet<CeeLearnAndDo_WeDev.Models.Consultant> Consultant { get; set; }
-        public DbSet<CeeLearnAndDo_WeDev.Models.Article> Article { get; set; }
+        public DbSet<CeeLearnAndDo_WeDev.Models.Question> Question { get; set; }
     }
 }
