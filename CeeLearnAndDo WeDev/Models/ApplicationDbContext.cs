@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using CeeLearnAndDo_WeDev.Models;
 
 namespace CeeLearnAndDo_WeDev.Data
 {
@@ -12,5 +13,6 @@ namespace CeeLearnAndDo_WeDev.Data
             : base(options)
         {
         }
+        public DbSet<CeeLearnAndDo_WeDev.Models.Consultant> Consultant { get; set; }
     }
 }
