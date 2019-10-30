@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CeeLearnAndDo_WeDev.Data;
 using CeeLearnAndDo_WeDev.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CeeLearnAndDo_WeDev.Controllers
 {
@@ -46,6 +47,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
         }
 
         // GET: Consultants/Create
+        [Authorize (Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id");
@@ -70,6 +72,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
         }
 
         // GET: Consultants/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -123,6 +126,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
         }
 
         // GET: Consultants/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
