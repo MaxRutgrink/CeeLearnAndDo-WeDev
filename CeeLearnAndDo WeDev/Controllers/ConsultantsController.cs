@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CeeLearnAndDo_WeDev.Data;
 using CeeLearnAndDo_WeDev.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CeeLearnAndDo_WeDev.Controllers
 {
@@ -23,7 +22,8 @@ namespace CeeLearnAndDo_WeDev.Controllers
         // GET: Consultants
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Consultant.ToListAsync());
+            var applicationDbContext = _context.Consultant.Include(c => c.User);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Consultants/Details/5
@@ -35,6 +35,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
             }
 
             var consultant = await _context.Consultant
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (consultant == null)
             {
@@ -45,9 +46,9 @@ namespace CeeLearnAndDo_WeDev.Controllers
         }
 
         // GET: Consultants/Create
-        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id");
             return View();
         }
 
@@ -64,11 +65,11 @@ namespace CeeLearnAndDo_WeDev.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id", consultant.UserId);
             return View(consultant);
         }
 
         // GET: Consultants/Edit/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,6 +82,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
             {
                 return NotFound();
             }
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id", consultant.UserId);
             return View(consultant);
         }
 
@@ -116,11 +118,11 @@ namespace CeeLearnAndDo_WeDev.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id", consultant.UserId);
             return View(consultant);
         }
 
         // GET: Consultants/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,6 +131,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
             }
 
             var consultant = await _context.Consultant
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (consultant == null)
             {

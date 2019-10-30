@@ -22,7 +22,8 @@ namespace CeeLearnAndDo_WeDev.Controllers
         // GET: FAQ
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Question.ToListAsync());
+            var applicationDbContext = _context.Question.Include(q => q.Category);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: FAQ/Details/5
@@ -34,6 +35,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
             }
 
             var question = await _context.Question
+                .Include(q => q.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (question == null)
             {
@@ -46,6 +48,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
         // GET: FAQ/Create
         public IActionResult Create()
         {
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Id");
             return View();
         }
 
@@ -62,6 +65,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Id", question.CategoryId);
             return View(question);
         }
 
@@ -78,6 +82,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
             {
                 return NotFound();
             }
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Id", question.CategoryId);
             return View(question);
         }
 
@@ -113,6 +118,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Id", question.CategoryId);
             return View(question);
         }
 
@@ -125,6 +131,7 @@ namespace CeeLearnAndDo_WeDev.Controllers
             }
 
             var question = await _context.Question
+                .Include(q => q.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (question == null)
             {
