@@ -51,6 +51,8 @@ namespace CeeLearnAndDo_WeDev.Controllers
         {
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Id");
             ViewData["ConsultantId"] = new SelectList(_context.Consultant, "Id", "Id");
+
+            
             return View();
         } 
 

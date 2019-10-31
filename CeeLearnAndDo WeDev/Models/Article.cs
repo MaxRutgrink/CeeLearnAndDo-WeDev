@@ -16,5 +16,9 @@ namespace CeeLearnAndDo_WeDev.Models
         public DateTime CreationDate { get; set; }
         public string Content { get; set; }
         public bool IsVisible { get; set; }
+        public Article()
+        {
+            CreationDate = DateTime.Now;
+        }
     }
 }
