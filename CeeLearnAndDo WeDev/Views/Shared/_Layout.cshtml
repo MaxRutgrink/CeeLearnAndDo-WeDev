@@ -6,12 +6,7 @@
     <title>@ViewData["Title"] - CeeLearnAndDo_WeDev</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-solar.css" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500|Open+Sans" rel="stylesheet">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -22,55 +17,37 @@
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-
 <body>
     <header>
-      
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/css/logos.png" height="36px" width="50px">
-                    CeeLearnAndDo_WeDev
-
-                </a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarColor02">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="Home">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="FAQ">FAQ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="Consultants">Consultants</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="Articles">Articles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="FAQ">Contact</a>
-                        </li>
-                    </ul>
-                   
-                </div>
-
-
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CeeLearnAndDo_WeDev</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
-                   <partial name="_LoginPartial" />
-
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Consultants" asp-action="Index">Consultants</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="FAQ" asp-action="Index">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Index">Artikelen</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
+                        </li>
+                    </ul>
                 </div>
-
-</nav>
-
+            </div>
+        </nav>
     </header>
     <div class="container">
         <partial name="_CookieConsentPartial" />
@@ -79,33 +56,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted font-italic">
+    <footer class="border-top footer text-muted">
         <div class="container">
-            
-                
-                    <div class="container bottom_border">
-                        <div class="row">
-                            <div class=" col-sm-4 col-md col-sm-4  col-12 col">
-                                <h5 class="headin5_amrc col_white_amrc pt2">Find us</h5>
-                                <!--headin5_amrc-->
-                                <p class="mb10">
-                                <h9><i class="fa fa-location-arrow"></i> 1703Ja Heerugowaard/NL</h9><br />
-                                <h9><i class="fa fa-phone"></i>  +31-684620255  </h9><br />
-                                <h9><i class="fa fa fa-envelope"></i> nvape420@gmail.com  </h9>
-
-
-                            </div>
-                        </div>
-   
-
-
-                    
-                    <p class="text-center">Copyright 2017 | Designed With by <a href="#">Vape nation 420</a></p>
-
-
-
-            </div>
-</footer>
+            &copy; 2019 - CeeLearnAndDo_WeDev - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
